@@ -81,7 +81,14 @@
         .main-nav a:hover {
             color: var(--primary);
         }
-        
+        .mood-check {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px; /* Space after label */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
         .main-nav a::after {
             content: '';
             position: absolute;
@@ -1091,18 +1098,36 @@
             </div>
         </div>
         
-        <div class="connect-form">
-            <h3>How Can I Help?</h3>
-            <p class="form-subtitle">What challenge would you like to explore today?</p>
-            
-            <form class="request-form">
-                <div class="form-group">
-                    <textarea id="message" placeholder="Express your thoughts freely here... (all shares are confidential)" rows="5"></textarea>
-                </div>
-                <button type="submit" class="primary-btn" style="width: 100%;">Share with Maria</button>
-            </form>
+       <div class="connect-form">
+    <h3>How Can I Help?</h3>
+    <p class="form-subtitle">What challenge would you like to explore today?</p>
+    
+    <form class="request-form">
+        <!-- How are you? Section -->
+        <div class="form-group">
+            <label for="how-are-you">How are you?</label>
+            <input 
+                type="text" 
+                id="how-are-you" 
+                name="how-are-you" 
+                placeholder="You can't just say 'I'm good' :)" 
+                class="mood-check" 
+            />
         </div>
-    </section>
+        
+        <!-- Main Message Box -->
+        <div class="form-group">
+            <textarea 
+                id="message" 
+                name="message" 
+                placeholder="Express your thoughts freely here... (all shares are confidential)" 
+                rows="5"
+            ></textarea>
+        </div>
+        
+        <button type="submit" class="primary-btn" style="width: 100%;">Share with Maria</button>
+    </form>
+</div>
 
     <!-- Testimonials -->
     <section class="profile-section">
