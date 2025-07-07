@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Johnson | Safe Space</title>
+    <style>
+        :root {
+            --primary: #FF7A45;  /* Light Platform purple */
+            --primary-light: #FF9A45;
+            --secondary: #FFD166; /* Keeping the warm accent */
+            --dark: #2E2E3A;    /* Darker for better contrast */
+            --medium: #5A5A6E;
+            --light: #F8F7FF;   /* Very light purple tint */
+            --white: #FFFFFF;
+            --shadow: 0 5px 15px rgba(108, 99, 255, 0.1);
+            --transition: all 0.3s ease;
+            --mentor-bg: linear-gradient(135deg, #FF7A45, #FF9A45);
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Safe Space Header - Aligned with Light Platform */
+           /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+            padding: 0 120px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #FF7A45;
+        }
+        
+        nav {
+            display: flex;
+            gap: 30px;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .login-btn {
+            background: #FF7A45;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .safe-pill {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 50px;
+            margin-bottom: 30px;
+            position: relative;
+            font-weight: 600;
+        }
+        
+        /* Safe Space Container */
+        .safe-container {
+            max-width: 1100px;
+            margin: -60px auto 80px;
+            position: relative;
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        
+        /* Welcome Section */
+        .welcome-section {
+            padding: 60px;
+            background: var(--white);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .welcome-message {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+        
+        .welcome-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary-light);
+            box-shadow: var(--shadow);
+        }
+        
+        .welcome-text h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+        
+        /* Ground Rules - Adapted for Mentorship */
+        .rules-section {
+            padding: 60px;
+            background: #F8F7FF;
+        }
+        
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .rule-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-top: 4px solid var(--primary);
+        }
+        
+        .rule-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(108, 99, 255, 0.15);
+        }
+        
+        .rule-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .rule-card h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        /* Comfort Zone - Career Focused */
+        .comfort-section {
+            padding: 60px;
+            background: white;
+            text-align: center;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .comfort-options {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 40px 0;
+        }
+        
+        .comfort-pill {
+            padding: 12px 25px;
+            background: var(--light);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            border: 1px solid var(--primary-light);
+        }
+        
+        .comfort-pill:hover, .comfort-pill.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        /* Sharing Space - Career Challenges */
+        .share-section {
+            padding: 60px;
+            background: #F8F7FF;
+        }
+        
+        .share-prompt {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .share-prompt h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .share-form textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 20px;
+            border: 1px solid var(--primary-light);
+            border-radius: 12px;
+            font-family: inherit;
+            resize: vertical;
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+        
+        .share-form textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+        }
+        
+        .share-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .share-btn {
+            padding: 12px 30px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .primary-btn {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .primary-btn:hover {
+            background: #5A52E0;
+            transform: translateY(-2px);
+        }
+        
+        .secondary-btn {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .secondary-btn:hover {
+            background: rgba(108, 99, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        /* Resources - Career Support */
+        .resources-section {
+            padding: 60px;
+            background: white;
+        }
+        
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .resource-card {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 30px;
+            border-left: 4px solid var(--primary);
+            transition: var(--transition);
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+        
+        .resource-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        /* Breathing Exercise - Stress Relief */
+        .breath-section {
+            padding: 80px 60px;
+            background: var(--mentor-bg);
+            color: white;
+            text-align: center;
+        }
+        
+        .breath-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 40px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 16px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .breath-animation {
+            width: 160px;
+            height: 160px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            margin: 30px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 600;
+            animation: breath 8s infinite ease-in-out;
+        }
+        
+        @keyframes breath {
+            0%, 100% { transform: scale(0.9); }
+            50% { transform: scale(1.1); }
+        }
+        
+        /* Footer */
+        .safe-footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--medium);
+            font-size: 0.9rem;
+            background: var(--light);
+        }
+        
+        /* Light Platform Connection */
+        .platform-cta {
+            background: white;
+            padding: 60px;
+            text-align: center;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .platform-cta h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .welcome-message {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .comfort-options {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .share-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .welcome-section, 
+            .rules-section,
+            .comfort-section,
+            .share-section,
+            .resources-section {
+                padding: 40px 25px;
+            }
+            
+            .safe-header h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Safe Space Header -->
+    <header class="safe-header">
+        <div class="safe-pill">Professional Safe Space</div>
+        <h1>Your Career Sanctuary</h1>
+        <p>A judgment-free zone to discuss workplace challenges, career transitions, and the human side of professional growth. This space honors both your ambitions and your wellbeing.</p>
+    </header>
+    
+    <!-- Safe Space Container -->
+    <div class="safe-container">
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <div class="welcome-message">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Alex Johnson" class="welcome-avatar">
+                <div class="welcome-text">
+                    <h2>Welcome to Your Professional Safe Space</h2>
+                    <p>Hi, I'm Alex. In my 12 years navigating tech leadership, I've learned that sustainable success requires spaces where we can be honest about our struggles. Whether you're facing imposter syndrome, burnout, or career crossroads, this is your place to explore those challenges without pretense. My role here is to listen, share from experience, and help you find clarity—not to "fix" you, because you're not broken.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Ground Rules -->
+        <section class="rules-section">
+            <h2>Our Mentorship Principles</h2>
+            <p>To maintain this as a productive and safe environment, we agree to:</p>
+            
+            <div class="rules-grid">
+                <div class="rule-card">
+                    <div class="rule-icon">🤝</div>
+                    <h3>Professional Respect</h3>
+                    <p>We honor each other's career journeys without judgment. Feedback is given only when requested.</p>
+                </div>
+                
+                <div class="rule-card">
+                    <div class="rule-icon">🔒</div>
+                    <h3>Confidentiality</h3>
+                    <p>What's shared here stays here. We protect each other's professional reputations.</p>
+                </div>
+                
+                <div class="rule-card">
+                    <div class="rule-icon">💡</div>
+                    <h3>Experience Over Advice</h3>
+                    <p>I'll share what's worked for me, but you're the expert on your own career path.</p>
+                </div>
+                
+                <div class="rule-card">
+                    <div class="rule-icon">⚖️</div>
+                    <h3>Whole-Person Approach</h3>
+                    <p>We acknowledge that work challenges often intersect with personal growth and mental health.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Comfort Zone Selector -->
+        <section class="comfort-section">
+            <h2>Where Are You Professionally?</h2>
+            <p>Set the tone for our conversation by indicating your current headspace:</p>
+            
+            <div class="comfort-options">
+                <div class="comfort-pill">Exploring Options</div>
+                <div class="comfort-pill active">Seeking Guidance</div>
+                <div class="comfort-pill">Career Transition</div>
+                <div class="comfort-pill">Leadership Challenges</div>
+                <div class="comfort-pill">Work-Life Balance</div>
+                <div class="comfort-pill">Celebrating Wins</div>
+            </div>
+        </section>
+        
+        <!-- Sharing Space -->
+        <section class="share-section">
+            <h2>How Can I help?</h2>
+            <p>What challenge would you like to explore today?</p>
+            
+          
+            
+            <form class="share-form">
+                <textarea placeholder="Express your thoughts freely here... (all shares are confidential)"></textarea>
+                <div class="share-actions">
+                    <button type="button" class="share-btn primary-btn">Share with Alex</button>
+                 
+                </div>
+            </form>
+        </section>
+        
+        <!-- Resources -->
+        <section class="resources-section">
+            <h2>Career Support Resources</h2>
+            <p>Tools for navigating professional challenges:</p>
+            
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <h3>Imposter Syndrome Toolkit</h3>
+                    <p>Evidence-based exercises to combat self-doubt and own your achievements.</p>
+                </div>
+                
+                <div class="resource-card">
+                    <h3>Career Crossroads Framework</h3>
+                    <p>A structured approach to evaluating your next professional move.</p>
+                </div>
+                
+                <div class="resource-card">
+                    <h3>Burnout Assessment</h3>
+                    <p>Identify your burnout risk factors and prevention strategies.</p>
+                </div>
+                
+                <div class="resource-card">
+                    <h3>Salary Negotiation Guide</h3>
+                    <p>Scripts and strategies for advocating for your worth.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Breathing Exercise -->
+        <section class="breath-section">
+            <h2>Mindful Career Moment</h2>
+            <p>Before making important decisions, ground yourself with this exercise:</p>
+            
+            <div class="breath-container">
+                <div class="breath-animation">
+                    Breathe
+                </div>
+                <p>Inhale ambition for 4 counts... Hold clarity for 4... Exhale doubt for 6...</p>
+                <p>Repeat. Your career is a marathon, not a sprint.</p>
+            </div>
+        </section>
+        
+        <!-- Light Platform Connection -->
+        <section class="platform-cta">
+            <h2>Continue Your Growth Journey</h2>
+            <p>This safe space is part of the Light Platform's mission to humanize professional development.</p>
+            <button class="primary-btn" style="margin-top: 20px;">Explore More Mentors</button>
+        </section>
+    </div>
+    
+    <footer class="safe-footer">
+        <p>Professional growth and personal wellbeing are not mutually exclusive. Return to this space whenever you need.</p>
+        <p>© 2023 Light Platform | Safe Space Integration</p>
+    </footer>
+    
+    <script>
+        // Comfort pill selection
+        document.querySelectorAll('.comfort-pill').forEach(pill => {
+            pill.addEventListener('click', function() {
+                document.querySelectorAll('.comfort-pill').forEach(p => p.classList.remove('active'));
+                this.classList.add('active');
+                
+                // In a real app, this would save the user's comfort level
+                console.log('Comfort level set to:', this.textContent);
+            });
+        });
+        
+        // Breathing animation control
+        const breathCircle = document.querySelector('.breath-animation');
+        let breathInterval;
+        
+        function startBreathing() {
+            let phase = 0;
+            const phases = [
+                { text: "Inhale Ambition", scale: 1.1 },
+                { text: "Hold Clarity", scale: 1.05 },
+                { text: "Exhale Doubt", scale: 0.9 },
+                { text: "Rest", scale: 1 }
+            ];
+            
+            breathInterval = setInterval(() => {
+                phase = (phase + 1) % phases.length;
+                breathCircle.textContent = phases[phase].text;
+                breathCircle.style.transform = `scale(${phases[phase].scale})`;
+            }, 4000);
+        }
+        
+        // Start when visible
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                startBreathing();
+            } else {
+                clearInterval(breathInterval);
+                breathCircle.textContent = "Breathe";
+                breathCircle.style.transform = "scale(1)";
+            }
+        }, { threshold: 0.5 });
+        
+        observer.observe(document.querySelector('.breath-section'));
+        
+        // Form submission
+        document.querySelector('.share-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // In a real app, this would send to the backend
+            const comfortLevel = document.querySelector('.comfort-pill.active').textContent;
+            const message = this.querySelector('textarea').value;
+            
+            console.log('New share:', { comfortLevel, message });
+            
+            // Visual feedback
+            this.querySelector('textarea').value = '';
+            alert('Thank you for sharing. Alex will respond with thoughtfulness and care.');
+        });
+        
+        // Platform connection
+        document.querySelector('.platform-cta .primary-btn').addEventListener('click', () => {
+            console.log('Navigating to Light Platform mentors');
+            // In a real app, this would link to the platform
+        });
+    </script>
+</body>
+</html>

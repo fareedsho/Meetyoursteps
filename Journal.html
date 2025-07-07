@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meet Your Steps | Light Journal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FF7A45;
+            --primary-light: #FF9A45;
+            --secondary: #FFC700;
+            --dark: #333333;
+            --medium: #666666;
+            --light: #F9F9F9;
+            --white: #FFFFFF;
+            --shadow: 0 5px 15px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+            padding: 0 120px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #FF7A45;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        nav {
+            display: flex;
+            gap: 30px;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            position: relative;
+        }
+        
+        nav a:hover::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        /* Journal Main Section */
+        .journal-hero {
+            text-align: center;
+            padding: 60px 0 40px;
+        }
+        
+        .journal-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .journal-hero p {
+            font-size: 1.1rem;
+            color: var(--medium);
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .streak-counter {
+            background: var(--white);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            border-radius: 50px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+        
+        .streak-count {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Journal Section */
+        .journal-section {
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin-top: 20px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            color: var(--dark);
+            margin-bottom: 20px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 40px;
+            width: 60px;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .journal-tool {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .journal-entry {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .journal-textarea {
+            min-height: 300px;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 16px;
+            resize: vertical;
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+        
+        .journal-textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(255, 122, 69, 0.2);
+        }
+
+        .journal-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 122, 69, 0.1);
+        }
+        
+        .btn-tertiary {
+            background: transparent;
+            color: var(--medium);
+            border: 1px solid #ddd;
+        }
+        
+        .btn-tertiary:hover {
+            background: rgba(0,0,0,0.02);
+        }
+
+        .journal-features {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .mood-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .mood-option {
+            font-size: 24px;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 50%;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .mood-option:hover {
+            background: var(--light);
+            transform: scale(1.1);
+        }
+
+        .mood-option.selected {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .mood-option .mood-label {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: var(--medium);
+            opacity: 0;
+            transition: var(--transition);
+        }
+        
+        .mood-option:hover .mood-label {
+            opacity: 1;
+        }
+
+        .prompt-card {
+            background: var(--light);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .prompt-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .prompt-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .prompt-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 14px;
+            color: var(--medium);
+        }
+        
+        .prompt-category {
+            background: rgba(255, 122, 69, 0.1);
+            color: var(--primary);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .entry-history {
+            margin-top: 40px;
+        }
+        
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .history-filter {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .filter-btn {
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            background: transparent;
+            border: 1px solid #ddd;
+            cursor: pointer;
+        }
+        
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .entry-card {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .entry-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .entry-date {
+            font-size: 14px;
+            color: var(--medium);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .entry-mood {
+            font-size: 18px;
+        }
+        
+        .entry-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            opacity: 0;
+            transition: var(--transition);
+        }
+        
+        .entry-card:hover .entry-actions {
+            opacity: 1;
+        }
+        
+        .entry-action {
+            background: transparent;
+            border: none;
+            color: var(--medium);
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .entry-action:hover {
+            color: var(--primary);
+        }
+        
+        /* Stats Section */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .stat-card {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 10px 0;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: var(--medium);
+        }
+        
+        /* Goals Section */
+        .goals-section {
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin: 40px 0;
+        }
+        
+        .goal-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .goal-checkbox {
+            margin-right: 15px;
+        }
+        
+        .goal-text {
+            flex: 1;
+        }
+        
+        .goal-completed {
+            text-decoration: line-through;
+            color: var(--medium);
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            header {
+                padding: 0 40px;
+            }
+            
+            .stats-section {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                padding: 0 20px;
+                height: 60px;
+            }
+            
+            nav {
+                gap: 15px;
+            }
+            
+            .journal-tool {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-section {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            nav {
+                display: none;
+            }
+            
+            .journal-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+    <div class="logo">Meet Your Steps</div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="discoverlights.html">Discover Lights</a>
+        <a href="Marialight.html">Light's Profile</a>
+        <a href="LightSeekerProfilePage.html">Light Seeker's Profile</a>
+        <a href="Safespace.html">Safe Spaces</a>
+        <a href="Journal.html">Inner Echo</a>
+        <a href="Blog.html">EchoSpace</a>
+        <a href="Article.html">Echoes</a>
+        <a href="Message.html">Message</a>
+    
+    </nav>
+</header>
+    <main class="container">
+        <!-- Journal Hero -->
+        <section class="journal-hero">
+            <h1><i class="fas fa-book-open"></i> Light Journal</h1>
+            <p>Your personal space for reflection, growth, and tracking your journey</p>
+            <div class="streak-counter">
+                <i class="fas fa-fire" style="color: var(--primary);"></i>
+                <span class="streak-count">12-day streak</span>
+                <span>Keep it going!</span>
+            </div>
+        </section>
+        
+        <!-- Stats Section -->
+        <div class="stats-section">
+            <div class="stat-card">
+                <i class="fas fa-pen-fancy"></i>
+                <div class="stat-value">47</div>
+                <div class="stat-label">Total Entries</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-calendar-check"></i>
+                <div class="stat-value">12</div>
+                <div class="stat-label">This Month</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-smile"></i>
+                <div class="stat-value">78%</div>
+                <div class="stat-label">Positive Moods</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-bullseye"></i>
+                <div class="stat-value">5/8</div>
+                <div class="stat-label">Goals Completed</div>
+            </div>
+        </div>
+
+        <!-- Journal Section -->
+        <section class="journal-section">
+            <h2 class="section-title"><i class="fas fa-edit"></i> Today's Reflection</h2>
+            <p>Capture your thoughts, feelings, and progress</p>
+            
+            <div class="journal-tool">
+                <div class="journal-entry">
+                    <textarea class="journal-textarea" placeholder="What's shining through today? You might want to reflect on challenges, gratitude, or personal growth..."></textarea>
+                    
+                    <div class="mood-selector">
+                        <div class="mood-option" data-mood="happy">
+                            😊
+                            <span class="mood-label">Happy</span>
+                        </div>
+                        <div class="mood-option" data-mood="neutral">
+                            😐
+                            <span class="mood-label">Neutral</span>
+                        </div>
+                        <div class="mood-option" data-mood="sad">
+                            😞
+                            <span class="mood-label">Sad</span>
+                        </div>
+                        <div class="mood-option" data-mood="excited">
+                            😃
+                            <span class="mood-label">Excited</span>
+                        </div>
+                        <div class="mood-option" data-mood="tired">
+                            😴
+                            <span class="mood-label">Tired</span>
+                        </div>
+                        <div class="mood-option" data-mood="grateful">
+                            😇
+                            <span class="mood-label">Grateful</span>
+                        </div>
+                    </div>
+                    
+                    <div class="journal-actions">
+                        <button class="btn btn-primary" id="saveEntry">
+                            <i class="fas fa-save"></i> Save Reflection
+                        </button>
+                        <button class="btn btn-secondary" id="clearEntry">
+                            <i class="fas fa-eraser"></i> Clear
+                        </button>
+                        <button class="btn btn-tertiary" id="voiceEntry">
+                            <i class="fas fa-microphone"></i> Voice Note
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="journal-features">
+                    <div class="prompt-card" id="dailyPrompt">
+                        <div class="prompt-title">
+                            <i class="fas fa-lightbulb"></i> Today's Prompt
+                        </div>
+                        <p>What's one small step you can take today toward your most important goal?</p>
+                        <div class="prompt-actions">
+                            <span class="prompt-category">Growth</span>
+                            <span><i class="far fa-clock"></i> 2 min read</span>
+                        </div>
+                    </div>
+                    
+                    <div class="prompt-card">
+                        <div class="prompt-title">
+                            <i class="fas fa-balance-scale"></i> Weekly Check-in
+                        </div>
+                        <p>How are you balancing work and personal life this week? What needs adjustment?</p>
+                        <div class="prompt-actions">
+                            <span class="prompt-category">Wellbeing</span>
+                            <span><i class="far fa-clock"></i> 3 min read</span>
+                        </div>
+                    </div>
+                    
+                    <div class="prompt-card">
+                        <div class="prompt-title">
+                            <i class="fas fa-heart"></i> Gratitude Moment
+                        </div>
+                        <p>List three things you're grateful for in your professional journey right now.</p>
+                        <div class="prompt-actions">
+                            <span class="prompt-category">Positivity</span>
+                            <span><i class="far fa-clock"></i> 1 min read</span>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-secondary" style="width: 100%;">
+                        <i class="fas fa-random"></i> Get Another Prompt
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Goals Section -->
+        <section class="goals-section">
+            <h2 class="section-title"><i class="fas fa-bullseye"></i> This Week's Goals</h2>
+            
+            <div class="goal-item">
+                <input type="checkbox" class="goal-checkbox" checked>
+                <div class="goal-text goal-completed">Complete project proposal draft</div>
+            </div>
+            
+            <div class="goal-item">
+                <input type="checkbox" class="goal-checkbox" checked>
+                <div class="goal-text goal-completed">30 minutes of morning meditation</div>
+            </div>
+            
+            <div class="goal-item">
+                <input type="checkbox" class="goal-checkbox">
+                <div class="goal-text">Reach out to 2 potential mentors</div>
+            </div>
+            
+            <div class="goal-item">
+                <input type="checkbox" class="goal-checkbox">
+                <div class="goal-text">Journal 3 times this week</div>
+            </div>
+            
+            <button class="btn btn-secondary" style="margin-top: 20px;">
+                <i class="fas fa-plus"></i> Add New Goal
+            </button>
+        </section>
+            
+        <!-- Entry History -->
+        <section class="journal-section">
+            <div class="history-header">
+                <h2 class="section-title"><i class="fas fa-history"></i> Your Journal History</h2>
+                <div class="history-filter">
+                    <button class="filter-btn active">All</button>
+                    <button class="filter-btn">This Week</button>
+                    <button class="filter-btn">Highlights</button>
+                    <button class="filter-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="entry-history" id="entryHistory">
+                <div class="entry-card">
+                    <div class="entry-date">
+                        <i class="far fa-calendar"></i> Today, 3:45 PM
+                        <span class="entry-mood">😊</span>
+                    </div>
+                    <p>Had a breakthrough in my project today after weeks of struggling. Realized I was approaching the problem from the wrong angle. Sometimes stepping back is the best way forward.</p>
+                    <div class="entry-actions">
+                        <button class="entry-action">
+                            <i class="fas fa-tag"></i> Tag
+                        </button>
+                        <button class="entry-action">
+                            <i class="fas fa-share-alt"></i> Share
+                        </button>
+                        <button class="entry-action">
+                            <i class="fas fa-ellipsis-h"></i> More
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="entry-card">
+                    <div class="entry-date">
+                        <i class="far fa-calendar"></i> Yesterday, 8:30 PM
+                        <span class="entry-mood">😐</span>
+                    </div>
+                    <p>Feeling overwhelmed with deadlines. Need to prioritize better and maybe delegate some tasks. Remembered Maria's advice about setting boundaries - will try saying no to two non-essential requests tomorrow.</p>
+                    <div class="entry-actions">
+                        <button class="entry-action">
+                            <i class="fas fa-tag"></i> Tag
+                        </button>
+                        <button class="entry-action">
+                            <i class="fas fa-share-alt"></i> Share
+                        </button>
+                        <button class="entry-action">
+                            <i class="fas fa-ellipsis-h"></i> More
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="entry-card">
+                    <div class="entry-date">
+                        <i class="far fa-calendar"></i> Monday, 9:15 AM
+                        <span class="entry-mood">😃</span>
+                    </div>
+                    <p>Excited to start the new mentorship program! Set three intentions: 1) Be open to feedback, 2) Ask more questions, 3) Share my own experiences too. Grateful for this opportunity to grow.</p>
+                    <div class="entry-actions">
+                        <button class="entry-action">
+                            <i class="fas fa-tag"></i> Tag
+                        </button>
+                        <button class="entry-action">
+                            <i class="fas fa-share-alt"></i> Share
+                        </button>
+                        <button class="entry-action">
+                            <i class="fas fa-ellipsis-h"></i> More
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="btn btn-secondary" style="width: 100%; margin-top: 20px;">
+                <i class="fas fa-book"></i> View All Entries
+            </button>
+        </section>
+    </main>
+
+    <script>
+        // Enhanced Journal Functionality
+        document.getElementById('saveEntry').addEventListener('click', function() {
+            const entry = document.querySelector('.journal-textarea').value;
+            const mood = document.querySelector('.mood-option.selected')?.dataset.mood || 'neutral';
+            
+            if (entry.trim() === '') {
+                alert('Please write something before saving');
+                return;
+            }
+            
+            // Create new entry card
+            const entryCard = document.createElement('div');
+            entryCard.className = 'entry-card';
+            entryCard.innerHTML = `
+                <div class="entry-date">
+                    <i class="far fa-calendar"></i> ${new Date().toLocaleString()}
+                    <span class="entry-mood">${getMoodEmoji(mood)}</span>
+                </div>
+                <p>${entry.substring(0, 150)}${entry.length > 150 ? '...' : ''}</p>
+                <div class="entry-actions">
+                    <button class="entry-action">
+                        <i class="fas fa-tag"></i> Tag
+                    </button>
+                    <button class="entry-action">
+                        <i class="fas fa-share-alt"></i> Share
+                    </button>
+                    <button class="entry-action">
+                        <i class="fas fa-ellipsis-h"></i> More
+                    </button>
+                </div>
+            `;
+            
+            // Prepend to history
+            document.getElementById('entryHistory').prepend(entryCard);
+            
+            // Reset form
+            document.querySelector('.journal-textarea').value = '';
+            document.querySelectorAll('.mood-option').forEach(opt => 
+                opt.classList.remove('selected'));
+            
+            // Show confirmation
+            showToast('Reflection saved successfully');
+            
+            // Update streak counter
+            updateStreak();
+        });
+        
+        // Mood selector
+        document.querySelectorAll('.mood-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.mood-option').forEach(opt => 
+                    opt.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+        
+        // Clear button
+        document.getElementById('clearEntry').addEventListener('click', function() {
+            if (confirm('Are you sure you want to clear your current reflection?')) {
+                document.querySelector('.journal-textarea').value = '';
+                document.querySelectorAll('.mood-option').forEach(opt => 
+                    opt.classList.remove('selected'));
+            }
+        });
+        
+        // Voice note button
+        document.getElementById('voiceEntry').addEventListener('click', function() {
+            alert('Voice recording feature would be enabled here');
+            // In a real app, this would use the Web Speech API
+        });
+        
+        // Prompt click handler
+        document.querySelectorAll('.prompt-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const promptText = this.querySelector('p').textContent;
+                document.querySelector('.journal-textarea').placeholder = promptText;
+                showToast('Prompt loaded - start writing!');
+            });
+        });
+        
+        // Helper functions
+        function getMoodEmoji(mood) {
+            const moods = {
+                happy: '😊',
+                neutral: '😐',
+                sad: '😞',
+                excited: '😃',
+                tired: '😴',
+                grateful: '😇'
+            };
+            return moods[mood] || '😐';
+        }
+        
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.position = 'fixed';
+            toast.style.bottom = '20px';
+            toast.style.left = '50%';
+            toast.style.transform = 'translateX(-50%)';
+            toast.style.backgroundColor = 'var(--primary)';
+            toast.style.color = 'white';
+            toast.style.padding = '12px 24px';
+            toast.style.borderRadius = '4px';
+            toast.style.boxShadow = '0 3px 10px rgba(0,0,0,0.2)';
+            toast.style.zIndex = '1000';
+            toast.style.animation = 'fadeIn 0.3s';
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'fadeOut 0.3s';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+        
+        function updateStreak() {
+            // In a real app, this would check actual streak from database
+            const streakEl = document.querySelector('.streak-count');
+            const currentStreak = parseInt(streakEl.textContent);
+            streakEl.textContent = `${currentStreak + 1}-day streak`;
+            
+            if (currentStreak % 5 === 0) {
+                showToast(`🔥 Amazing! ${currentStreak + 1} days in a row!`);
+            }
+        }
+        
+        // Add some animation styles
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+                to { opacity: 1; transform: translateX(-50%) translateY(0); }
+            }
+            @keyframes fadeOut {
+                from { opacity: 1; transform: translateX(-50%) translateY(0); }
+                to { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Light Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* About Page Specific Styles */
+        .about-hero {
+            background: linear-gradient(135deg, #FFEDCC, #FFF8E6);
+            text-align: center;
+            padding: 100px 20px;
+        }
+        
+        .about-hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #FF7A45;
+        }
+        
+        .about-hero p {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 20px;
+            color: #666;
+        }
+        
+        .mission-section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .mission-block {
+            margin-bottom: 60px;
+        }
+        
+        .mission-block h2 {
+            font-size: 32px;
+            color: #FF7A45;
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .mission-block h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: #FF7A45;
+        }
+        
+        .mission-block p {
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #555;
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+        
+        .value-card {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .value-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .value-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: #FF7A45;
+        }
+        
+        .value-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .team-section {
+            background: #F9F9F9;
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .team-members {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 60px auto 0;
+        }
+        
+        .team-member {
+            width: 250px;
+        }
+        
+        .team-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #FF7A45;
+            margin: 0 auto 20px;
+        }
+        
+        .join-cta {
+            background: linear-gradient(135deg, #FF7A45, #FF9A45);
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+        }
+        
+        .join-cta h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .about-hero h1 {
+                font-size: 36px;
+            }
+            
+            .mission-block h2 {
+                font-size: 28px;
+            }
+            
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        footer {
+    background: #FFF4E6;
+    color: #444;
+    padding: 40px 20px;
+    text-align: center;
+    font-size: 16px;
+    margin-top: 0;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+.footer-links a {
+    color: #FF7A45;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #FF9A45;
+    text-decoration: underline;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.social-icons img {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s ease;
+}
+
+.social-icons img:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+    </style>
+</head>
+<body>
+    <!-- Header (Same as landing page) -->
+   <div id="header"></div>
+
+
+    <!-- About Hero Section -->
+    <section class="about-hero">
+        <h1>Not Just Skills. Shared Humanity.</h1>
+        <p>We believe in the transformative power of human connection and shared wisdom</p>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="mission-section">
+        <div class="mission-block">
+            <h2>💬 Why We Exist</h2>
+            <p>In a world that often values skills and achievements above all, we believe that being human comes first. Growth and learning aren’t just about mastering tasks or hitting goal they’re about connection, reflection, and shared experience. We’re not against skills or achievement.  We are human first.</p>
+       <p>Mental health isn’t one thing; it takes many forms and looks different for everyone. Sometimes it’s anxiety, sadness, or overwhelm and often invisible but deeply felt. What truly helps is connection: hearing others’ stories, reflecting together, and having honest conversations and feeling safe to ask for help. These moments remind us we’re not alone and help lighten the weight we carry.</p>
+       <p>This space is for students, career changers, and anyone feeling lost or struggling—not as therapy, but as a place to pause, share, and find gentle support. You don’t have to have it all figured out. Here, growth happens through our shared humanity.</p>
+        </div>
+        
+        <div class="mission-block">
+            <h2>🔮 Our Vision</h2>
+            <p>To nurture a culture of generosity and growth where people guide one another not by status or credentials, but by sharing the light they carry. Because sometimes, all we need to move forward is a story, a moment, or someone who simply listens.</p>
+        </div>
+
+        <div class="mission-block">
+            <h2>🌟 What We Believe</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">💡</div>
+                    <h3>Everyone Has Value</h3>
+                    <p>Everyone has something to offer, a story, a skill, a moment of clarity that might light the way for someone else.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🤝</div>
+                    <h3>Connection Matters</h3>
+                    <p>Human connection is powerful especially when grounded in empathy, honesty, and trust.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🔄</div>
+                    <h3>Growth Isn't Linear</h3>
+                    <p>It's okay to ask, to listen, or simply to be uncertain. Growth happens in many ways.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mission-block">
+            <h2>🕯️ What We Offer</h2>
+            <p>We invite experienced people and preofessionals or as we call them, Lights are people who share their real-life journeys, the successes, the struggles, and everything in between. They offer their experiences to help light the way for others.</p>
+            <p>Lightseekers are people looking for guidance, support, or just someone who understands. They come with open minds and hearts, ready to learn and grow.</p>
+<p> It's that simple: some people share their light, others are looking for light and often, we're all both at different times in our lives.</p>
+            <ul style="list-style-type: none; margin: 20px 0; line-height: 2;">
+                <li>📖 Personal stories and reflections on life and work and personal struggles</li>
+                <li>📅 1:1, or Group sessions (free or low-cost)</li>
+                <li>💬 Conversations rooted in kindness, curiosity, and care</li>
+            </ul>
+            <p>And most importantly, we offer a welcoming space for anyone to learn, reflect, connect or just be.</p>
+        </div>
+        
+        <div class="mission-block">
+            <h2>🤝 Who This Is For</h2>
+            <p>This space is for anyone looking for more than a quick answer for those who value connection and meaning or inspiration:</p>
+            <ul style="list-style-type: none; margin: 20px 0; line-height: 2;">
+                <ul>
+  <li>Students and early-career professionals feeling uncertain or looking for direction</li>
+  <li>Career changers and explorers questioning their next steps</li>
+  <li>Humans who believe learning is more than just skills—it's about growth, meaning, and shared experience</li>
+  <li>Anyone feeling lost or struggling with their mental health who’s looking for a space to pause, reflect, and connect with others’ experiences.</li>
+<ul style="list-style-type: none; margin: 20px 0; line-height: 2;">
+  <li style="font-weight: bold;">
+    While this is not therapy or a substitute for professional help, it is a space for grounding, support, and gentle self-discovery.<br>
+    You're not alone here and you don’t have to have it all figured out.
+  </li>
+</ul>
+<style>
+  .spaced-top {
+    margin-top: 1.5em;
+  }
+</style>
+     
+    </section>
+
+    <!-- Team Section -->
+<!-- Team Section -->
+<section class="team-section" style="text-align: center; padding: 2rem;">
+    <h2>Our Guiding Lights</h2>
+    <p>The passionate team behind the platform</p>
+
+    <div class="team-members" style="display: flex; justify-content: center; gap: 2rem; flex-wrap: nowrap;">
+        <div class="team-member" style="flex: 0 0 auto;">
+            <img src="fs.jpg" alt="Fareed Shoaib" class="team-photo" style="width: 150px; height: 150px; border-radius: 50%;">
+            <h3>Fareed Shoaib</h3>
+            <p>Solo Dreamer-in-Chief</p>
+        </div>
+        <div class="team-member" style="flex: 0 0 auto;">
+            <img src="https://via.placeholder.com/150" alt="Future Teammate 1" class="team-photo" style="width: 150px; height: 150px; border-radius: 50%;">
+            <h3>?</h3>
+            <p>?</p>
+        </div>
+        <div class="team-member" style="flex: 0 0 auto;">
+            <img src="https://via.placeholder.com/150" alt="Future Teammate 2" class="team-photo" style="width: 150px; height: 150px; border-radius: 50%;">
+            <h3>?</h3>
+            <p>?</p>
+        </div>
+        <div class="team-member" style="flex: 0 0 auto;">
+            <img src="https://via.placeholder.com/150" alt="Future Teammate 3" class="team-photo" style="width: 150px; height: 150px; border-radius: 50%;">
+            <h3>?</h3>
+            <p>?</p>
+        </div>
+    </div>
+</section>
+
+    <!-- Join CTA -->
+    <section class="join-cta">
+        <h2>Ready to join our community?</h2>
+        <button class="primary-btn">Become a Light</button>
+        <button class="secondary-btn">Find Your Light</button>
+    </section>
+
+    <!-- Footer (Same as landing page) -->
+<!-- Footer -->
+<footer>
+    <div class="footer-links">
+        <a href="#">About</a>
+        <a href="#">Terms</a>
+        <a href="#">Privacy</a>
+        <a href="#">Contact</a>
+    </div>
+    <div class="social-icons">
+        <img src="https://via.placeholder.com/30" alt="Facebook">
+        <img src="https://via.placeholder.com/30" alt="Twitter">
+        <img src="https://via.placeholder.com/30" alt="Instagram">
+    </div>
+    <p style="margin-top: 20px; font-size: 14px; color: #777;">&copy; 2025 Meet Your Steps. All rights reserved.</p>
+</footer>
+
+        <script>
+            // Simple JavaScript for demonstration
+            document.querySelectorAll('button').forEach(button => {
+                button.addEventListener('click', () => {
+                    alert('Button clicked! In a real app, this would navigate to another page.');
+                });
+            });
+        </script>
+
+        <script>
+  fetch('header.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('header').innerHTML = data;
+    });
+</script>
+
+  
+</body>
+</html>

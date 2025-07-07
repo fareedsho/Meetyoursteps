@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover Lights | Light Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Main Layout */
+        .discover-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* Hero Section - Full Width */
+        .discover-hero {
+            background: linear-gradient(135deg, #FFF0E5, #FFE4CC);
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .discover-hero h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .discover-hero p {
+            max-width: 700px;
+            margin: 0 auto 40px;
+            font-size: 18px;
+            color: #666;
+        }
+        
+        /* Search Bar */
+        .search-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .search-bar {
+            display: flex;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .search-dropdown {
+            position: relative;
+        }
+        
+        .search-dropdown select {
+            padding: 15px;
+            border: none;
+            background: #F5F5F5;
+            appearance: none;
+            padding-right: 35px;
+            cursor: pointer;
+        }
+        
+        .search-dropdown::after {
+            content: '▼';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: #666;
+            font-size: 12px;
+        }
+        
+        .search-input {
+            flex: 1;
+            position: relative;
+        }
+        
+        .search-input input {
+            width: 100%;
+            padding: 15px 20px 15px 45px;
+            border: none;
+            font-size: 16px;
+        }
+        
+        .search-input::before {
+            content: '🔍';
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .search-button {
+            padding: 0 25px;
+            background: #FF7A45;
+            color: white;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        /* Main Content with Filter */
+        .content-with-filter {
+            display: flex;
+            margin-top: 50px;
+        }
+        
+        /* Filter Sidebar */
+        .filter-sidebar {
+            width: 280px;
+            padding: 0 20px 30px;
+            position: sticky;
+            top: 80px;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+        }
+        
+        .filter-group {
+            margin-bottom: 25px;
+        }
+        
+        .filter-group h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #555;
+            display: flex;
+            align-items: center;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .filter-option {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .filter-option:hover {
+            background: #EEE;
+        }
+        
+        .filter-option.active {
+            background: #FF7A45;
+            color: white;
+        }
+        
+        .filter-option input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 0 20px 30px;
+        }
+        
+        /* Lights List (Rows) */
+        .lights-list {
+            margin-bottom: 60px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .section-header h2 {
+            font-size: 28px;
+            color: #333;
+        }
+        
+        .view-all {
+            color: #FF7A45;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        
+        .light-row {
+            display: flex;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .light-row:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .light-image {
+            width: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .light-details {
+            flex: 1;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .light-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .light-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .light-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #FF7A45;
+        }
+        
+        .light-title {
+            color: #FF7A45;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        .light-bio {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .light-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+        
+        .light-location {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #888;
+        }
+        
+        .light-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .light-actions button {
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .view-profile {
+            background: #F5F5F5;
+            border: 1px solid #DDD;
+            color: #333;
+        }
+        
+        .view-profile:hover {
+            background: #EEE;
+        }
+        
+        .book-session {
+            background: #FF7A45;
+            border: 1px solid #FF7A45;
+            color: white;
+        }
+        
+        .book-session:hover {
+            background: #E06A3A;
+        }
+        
+        /* Live Sessions Section */
+        .live-sessions {
+            margin-bottom: 60px;
+        }
+        
+        .session-row {
+            display: flex;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+        
+        .session-time {
+            width: 150px;
+            background: #FF7A45;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .session-date {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .session-duration {
+            font-size: 14px;
+        }
+        
+        .session-details {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .session-host {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-right: 30px;
+        }
+        
+        .host-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .session-info {
+            flex: 1;
+        }
+        
+        .session-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .session-description {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .session-topic {
+            display: inline-block;
+            background: #F5F5F5;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .session-join {
+            padding: 10px 20px;
+            background: #FF7A45;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        /* Articles Section */
+        .articles-section {
+            margin-bottom: 60px;
+        }
+        
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .article-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .article-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .article-image {
+            height: 160px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .article-content {
+            padding: 20px;
+        }
+        
+        .article-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .article-excerpt {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .article-author {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+        
+        .author-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        /* CTA Section */
+        .discover-more {
+            text-align: center;
+            margin: 40px 0;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .content-with-filter {
+                flex-direction: column;
+            }
+            
+            .filter-sidebar {
+                width: 100%;
+                position: static;
+                height: auto;
+                padding: 20px;
+                background: white;
+                border-bottom: 1px solid #EEE;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .discover-hero h1 {
+                font-size: 32px;
+            }
+            
+            .search-bar {
+                flex-direction: column;
+            }
+            
+            .search-dropdown select {
+                width: 100%;
+                border-bottom: 1px solid #EEE;
+            }
+            
+            .light-row {
+                flex-direction: column;
+            }
+            
+            .light-image {
+                width: 100%;
+                height: 200px;
+            }
+            
+            .session-row {
+                flex-direction: column;
+            }
+            
+            .session-time {
+                width: 100%;
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 15px;
+            }
+            
+            .session-details {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .session-host {
+                margin-bottom: 15px;
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+   <div id="header"></div>
+
+    <!-- Hero Section - Full Width -->
+    <div class="discover-container">
+        <section class="discover-hero">
+            <h1>Find Your Guiding Light</h1>
+            <p>Connect with mentors who share not just skills, but their personal journeys and hard-won wisdom.</p>
+            
+            <div class="search-container">
+                <div class="search-bar">
+                    <div class="search-dropdown">
+                        <select>
+                            <option>All Lights</option>
+                            <option>Articles</option>
+                            <option>Live Sessions</option>
+                        </select>
+                    </div>
+                    <div class="search-input">
+                        <input type="text" placeholder="Search for mentors, topics, or keywords...">
+                    </div>
+                    <button class="search-button">Search</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Content with Filter Sidebar -->
+        <div class="content-with-filter">
+            <!-- Filter Sidebar (starts from Featured Lights) -->
+            <aside class="filter-sidebar">
+                <h2>Refine Your Search</h2>
+                
+                <div class="filter-group">
+                    <h3>🏢 Industry</h3>
+                    <div class="filter-options">
+                        <label class="filter-option">
+                            <input type="checkbox"> Technology
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox"> Design
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox"> Healthcare
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox"> Finance
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h3>🏛️ Company</h3>
+                    <div class="filter-options">
+                        <label class="filter-option">
+                            <input type="checkbox"> Google
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox"> Apple
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox"> Amazon
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox"> Microsoft
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h3>🎓 Topics</h3>
+                    <div class="filter-options">
+                        <label class="filter-option">
+                            <input type="checkbox"> Career Growth
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox"> Leadership
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox"> Mental Health
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox"> Work-Life Balance
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h3>🌍 Location</h3>
+                    <div class="filter-options">
+                        <label class="filter-option">
+                            <input type="checkbox"> North America
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox"> Europe
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox"> Asia
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox"> Remote Only
+                        </label>
+                    </div>
+                </div>
+                
+                <button class="primary-btn" style="width: 100%; margin-top: 20px;">Apply Filters</button>
+                <button class="secondary-btn" style="width: 100%; margin-top: 10px;">Reset All</button>
+            </aside>
+            
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Lights List -->
+                <section class="lights-list">
+                    <div class="section-header">
+                        <h2>Featured Lights</h2>
+                        <a href="#" class="view-all">View All</a>
+                    </div>
+                    
+                    <!-- Light Row 1 -->
+                    <div class="light-row">
+                        <div class="light-image" style="background-image: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');"></div>
+                        <div class="light-details">
+                            <div class="light-header">
+                                <h3 class="light-name">Maria Chen</h3>
+                                <div class="light-rating">⭐ 4.9 (128)</div>
+                            </div>
+                            <p class="light-title">Product Designer & Mental Health Advocate</p>
+                            <p class="light-bio">Former Google PM specializing in helping designers navigate burnout and find sustainable career paths. I share my journey through depression and how it transformed my approach to leadership.</p>
+                            <div class="light-footer">
+                                <div class="light-location">📍 San Francisco, CA • Remote</div>
+                                <div class="light-actions">
+                                    <button class="view-profile">View Profile</button>
+                                    <button class="book-session">Request Light</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Light Row 2 -->
+                    <div class="light-row">
+                        <div class="light-image" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');"></div>
+                        <div class="light-details">
+                            <div class="light-header">
+                                <h3 class="light-name">Jamal Williams</h3>
+                                <div class="light-rating">⭐ 4.8 (97)</div>
+                            </div>
+                            <p class="light-title">Tech Lead & Career Transition Coach</p>
+                            <p class="light-bio">Helping engineers transition to management roles with empathy and strategic thinking. My story: From nearly dropping out of college to leading teams at FAANG companies.</p>
+                            <div class="light-footer">
+                                <div class="light-location">📍 New York, NY • Remote</div>
+                                <div class="light-actions">
+                                    <button class="view-profile">View Profile</button>
+                                    <button class="book-session">Request Light</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Light Row 3 -->
+                    <div class="light-row">
+                        <div class="light-image" style="background-image: url('https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');"></div>
+                        <div class="light-details">
+                            <div class="light-header">
+                                <h3 class="light-name">Sarah Johnson</h3>
+                                <div class="light-rating">⭐ 5.0 (64)</div>
+                            </div>
+                            <p class="light-title">Startup Founder & Public Speaker</p>
+                            <p class="light-bio">From failed startup to successful exit - lessons on resilience and reinvention. I share the unglamorous truth about entrepreneurship and mental health.</p>
+                            <div class="light-footer">
+                                <div class="light-location">📍 London, UK • Remote</div>
+                                <div class="light-actions">
+                                    <button class="view-profile">View Profile</button>
+                                    <button class="book-session">Request Light</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Live Sessions Section -->
+                <section class="live-sessions">
+                    <div class="section-header">
+                        <h2>Upcoming Live Sessions</h2>
+                        <a href="#" class="view-all">View All</a>
+                    </div>
+                    
+                    <!-- Session 1 -->
+                    <div class="session-row">
+                        <div class="session-time">
+                            <div class="session-date">Jun 15</div>
+                            <div class="session-duration">2:00 PM EST</div>
+                        </div>
+                        <div class="session-details">
+                            <div class="session-host">
+                                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80" alt="Host" class="host-avatar">
+                                <div>
+                                    <div>Maria Chen</div>
+                                    <div class="session-topic">Mental Health</div>
+                                </div>
+                            </div>
+                            <div class="session-info">
+                                <h3 class="session-title">Navigating Burnout in Creative Careers</h3>
+                                <p class="session-description">A candid conversation about recognizing burnout and developing sustainable work habits.</p>
+                            </div>
+                            <button class="session-join">Join Session</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Session 2 -->
+                    <div class="session-row">
+                        <div class="session-time">
+                            <div class="session-date">Jun 17</div>
+                            <div class="session-duration">4:00 PM EST</div>
+                        </div>
+                        <div class="session-details">
+                            <div class="session-host">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80" alt="Host" class="host-avatar">
+                                <div>
+                                    <div>Jamal Williams</div>
+                                    <div class="session-topic">Career Growth</div>
+                                </div>
+                            </div>
+                            <div class="session-info">
+                                <h3 class="session-title">The Engineer to Manager Transition</h3>
+                                <p class="session-description">Practical advice for technical professionals moving into leadership roles.</p>
+                            </div>
+                            <button class="session-join">Join Session</button>
+                        </div>
+                    </div>
+                    
+                    <div class="discover-more">
+                        <button class="primary-btn">Discover More Sessions</button>
+                    </div>
+                </section>
+                
+                <!-- Articles Section -->
+                <section class="articles-section">
+                    <div class="section-header">
+                        <h2>Related Articles</h2>
+                        <a href="#" class="view-all">View All</a>
+                    </div>
+                    
+                    <div class="articles-grid">
+                        <!-- Article 1 -->
+                        <div class="article-card">
+                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');"></div>
+                            <div class="article-content">
+                                <h3 class="article-title">From Failing My First Job to Finding My Purpose</h3>
+                                <p class="article-excerpt">How hitting rock bottom became the foundation for my most meaningful work and how you can navigate career setbacks.</p>
+                                <div class="article-author">
+                                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80" alt="Author" class="author-avatar">
+                                    <span>Maria Chen</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Article 2 -->
+                        <div class="article-card">
+                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1521791055366-0d553872125f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');"></div>
+                            <div class="article-content">
+                                <h3 class="article-title">Why I Chose Empathy Over Efficiency</h3>
+                                <p class="article-excerpt">The surprising business case for slowing down and truly listening to your team members and colleagues.</p>
+                                <div class="article-author">
+                                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80" alt="Author" class="author-avatar">
+                                    <span>Sarah Johnson</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Article 3 -->
+                        <div class="article-card">
+                            <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');"></div>
+                            <div class="article-content">
+                                <h3 class="article-title">What Losing My Mentor Taught Me About Being One</h3>
+                                <p class="article-excerpt">The circle of guidance continues, even when the original teachers are gone. Lessons on paying it forward.</p>
+                                <div class="article-author">
+                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80" alt="Author" class="author-avatar">
+                                    <span>Jamal Williams</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="discover-more">
+                        <button class="secondary-btn">Browse All Articles</button>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="#">Terms</a>
+            <a href="#">Privacy</a>
+            <a href="#">Contact</a>
+        </div>
+        <div class="social-icons">
+            <img src="https://via.placeholder.com/30" alt="Facebook">
+            <img src="https://via.placeholder.com/30" alt="Twitter">
+            <img src="https://via.placeholder.com/30" alt="Instagram">
+        </div>
+        <p class="copyright">© 2023 Light Platform. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Filter functionality
+        document.querySelectorAll('.filter-option').forEach(option => {
+            option.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const checkbox = this.querySelector('input[type="checkbox"]');
+                checkbox.checked = !checkbox.checked;
+                
+                // In a real app, you would trigger filtering here
+                console.log('Filter updated:', checkbox.checked ? 'Added' : 'Removed', this.textContent.trim());
+            });
+        });
+        
+        // Apply Filters button
+        document.querySelector('.primary-btn').addEventListener('click', function() {
+            // In a real app, this would apply all selected filters
+            const activeFilters = document.querySelectorAll('.filter-option.active');
+            const filterValues = Array.from(activeFilters).map(filter => filter.textContent.trim());
+            console.log('Applying filters:', filterValues);
+            alert(`Applying ${filterValues.length} filters`);
+        });
+        
+        // Reset Filters button
+        document.querySelector('.secondary-btn').addEventListener('click', function() {
+            document.querySelectorAll('.filter-option.active').forEach(option => {
+                option.classList.remove('active');
+                option.querySelector('input[type="checkbox"]').checked = false;
+            });
+            console.log('All filters reset');
+        });
+        
+        // Search functionality
+        document.querySelector('.search-button').addEventListener('click', function() {
+            const searchTerm = document.querySelector('.search-input input').value;
+            const searchType = document.querySelector('.search-dropdown select').value;
+            console.log(`Searching for "${searchTerm}" in ${searchType}`);
+            // In a real app, this would trigger a search
+        });
+        
+        // Light profile interactions
+        document.querySelectorAll('.view-profile').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const lightName = this.closest('.light-row').querySelector('.light-name').textContent;
+                console.log('Viewing profile:', lightName);
+                // In a real app, navigate to profile page
+            });
+        });
+        
+        document.querySelectorAll('.book-session').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const lightName = this.closest('.light-row').querySelector('.light-name').textContent;
+                console.log('Booking session with:', lightName);
+                // In a real app, open booking modal
+            });
+        });
+        
+        // Whole light row click
+        document.querySelectorAll('.light-row').forEach(row => {
+            row.addEventListener('click', function() {
+                const lightName = this.querySelector('.light-name').textContent;
+                console.log('Navigating to profile:', lightName);
+                // In a real app, navigate to profile page
+            });
+        });
+        
+        // Session join buttons
+        document.querySelectorAll('.session-join').forEach(button => {
+            button.addEventListener('click', function() {
+                const sessionTitle = this.closest('.session-row').querySelector('.session-title').textContent;
+                console.log('Joining session:', sessionTitle);
+                // In a real app, open session join flow
+            });
+        });
+        
+        // Article card clicks
+        document.querySelectorAll('.article-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const articleTitle = this.querySelector('.article-title').textContent;
+                console.log('Opening article:', articleTitle);
+                // In a real app, navigate to article page
+            });
+        });
+    </script>
+
+    <script>
+  fetch('header.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('header').innerHTML = data;
+    });
+</script>
+</body>
+</html>
